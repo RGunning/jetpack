@@ -27,6 +27,11 @@ export const Writing = React.createClass( {
 			isDevMode: this.props.isDevMode,
 			isUnavailableInDevMode: this.props.isUnavailableInDevMode
 		};
+
+		if ( '/writing' !== this.props.route.path ) {
+			return <span />;
+		}
+
 		return (
 			<div>
 				<QuerySite />
