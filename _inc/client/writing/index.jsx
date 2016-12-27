@@ -28,7 +28,7 @@ export const Writing = React.createClass( {
 			isUnavailableInDevMode: this.props.isUnavailableInDevMode
 		};
 
-		if ( '/writing' !== this.props.route.path ) {
+		if ( ! this.props.searchTerm && ! this.props.active ) {
 			return <span />;
 		}
 
@@ -37,6 +37,7 @@ export const Writing = React.createClass( {
 				<QuerySite />
 				<Composing
 					{ ...commonProps } />
+					searchTerm={ this.props.searchTerm }
 				<Media
 					{ ...commonProps } />
 				<CustomContentTypes
