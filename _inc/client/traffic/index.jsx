@@ -27,6 +27,11 @@ export const Traffic = React.createClass( {
 			isDevMode: this.props.isDevMode,
 			isUnavailableInDevMode: this.props.isUnavailableInDevMode
 		};
+
+		if ( ! this.props.active ) {
+			return <span />;
+		}
+
 		return (
 			<div>
 				<QuerySite />

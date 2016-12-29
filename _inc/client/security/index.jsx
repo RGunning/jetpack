@@ -27,7 +27,7 @@ export const Security = React.createClass( {
 			isUnavailableInDevMode: this.props.isUnavailableInDevMode
 		};
 
-		if ( '/security' !== props.route.path ) {
+		if ( ! this.props.active ) {
 			return <span />;
 		}
 
