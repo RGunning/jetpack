@@ -19,10 +19,11 @@ import {
 	getModule as _getModule,
 	getModules
 } from 'state/modules';
+import { isModuleFound as _isModuleFound } from 'state/search';
 import { userCanManageModules } from 'state/initial-state';
 
 export const GeneralSettings = ( props ) => {
-	if ( ! props.active ) {
+	if ( ! props.searchTerm && ! props.active ) {
 		return <span />;
 	}
 
@@ -42,6 +43,7 @@ export default connect(
 		return {
 			isModuleActivated: ( module_name ) => _isModuleActivated( state, module_name ),
 			getModule: ( module_name ) => _getModule( state, module_name ),
+			isModuleFound: ( module_name ) => _isModuleFound( state, module_name ),
 			isTogglingModule: ( module_name ) => isActivatingModule( state, module_name ) || isDeactivatingModule( state, module_name ),
 			isUnavailableInDevMode: ( module_name ) => isUnavailableInDevMode( state, module_name ),
 			userCanManageModules: userCanManageModules( state ),
@@ -52,8 +54,8 @@ export default connect(
 		return {
 			toggleModule: ( module_name, activated ) => {
 				return ( activated )
-					? dispatch( deactivateModule( module_name ) )
-					: dispatch( activateModule( module_name ) );
+					 ? dispatch( deactivateModule( module_name ) )
+					 : dispatch( activateModule( module_name ) );
 			},
 			disconnectSite: () => dispatch( disconnectSite )
 		};
