@@ -12,7 +12,7 @@ import { getSettings } from 'state/settings';
 import { isDevMode, isUnavailableInDevMode } from 'state/connection';
 import QuerySite from 'components/data/query-site';
 import { BackupsScan } from './backups-scan';
-import { Antispam } from './antispam';
+import Antispam from './antispam';
 import { Protect } from './protect';
 import { SSO } from './sso';
 
