@@ -8,6 +8,7 @@ import FormToggle from 'components/form/form-toggle';
 /**
  * Internal dependencies
  */
+import { FEATURE_VIDEO_HOSTING_JETPACK } from 'lib/plans/constants';
 import {
 	FormFieldset,
 	FormLegend,
@@ -69,6 +70,7 @@ export const Media = moduleSettingsForm(
 			return (
 				<SettingsCard
 					{ ...this.props }
+					feature={ FEATURE_VIDEO_HOSTING_JETPACK }
 					header={ __( 'Media' ) }>
 					<SettingsGroup hasChild disableInDevMode module={ photon }>
 						<ModuleToggle slug="photon"

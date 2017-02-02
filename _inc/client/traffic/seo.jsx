@@ -9,6 +9,7 @@ import ExternalLink from 'components/external-link';
 /**
  * Internal dependencies
  */
+import { FEATURE_SEO_TOOLS_JETPACK } from 'lib/plans/constants';
 import { ModuleSettingsForm as moduleSettingsForm } from 'components/module-settings/module-settings-form';
 import SettingsCard from 'components/settings-card';
 import SettingsGroup from 'components/settings-group';
@@ -20,6 +21,7 @@ export const SEO = moduleSettingsForm(
 			return (
 				<SettingsCard
 					{ ...this.props }
+					feature={ FEATURE_SEO_TOOLS_JETPACK }
 					header={ __( 'Search Engine Optimization', { context: 'Settings header' } ) }
 					hideButton>
 					<SettingsGroup disableInDevMode module={ { module: 'seo-tools' } } support="https://jetpack.com/support/seo-tools/">
