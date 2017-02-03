@@ -7,7 +7,6 @@ import { translate as __ } from 'i18n-calypso';
 import Card from 'components/card';
 import SectionHeader from 'components/section-header';
 import Gridicon from 'components/gridicon';
-import SiteIcon from 'components/my-sites-navigation/site-icon';
 
 /**
  * Internal dependencies
@@ -29,22 +28,39 @@ import {
 import QueryUserConnectionData from 'components/data/query-user-connection';
 import ConnectButton from 'components/connect-button';
 
-const ConnectionSettings = React.createClass( {
-	render() {
+const DashConnections = React.createClass( {
 
+	/**
+	 * Render a card for site connection. If it's connected, indicate if user is the connection owner.
+	 * Show alternative message if site is in development mode.
+	 *
+	 * @returns {string}
+	 */
+	siteConnection() {
 		const maybeShowDisconnectBtn = this.props.userCanDisconnectSite
 			? <ConnectButton asLink />
 			: null;
 
-		const maybeShowLinkUnlinkBtn = this.props.userIsMaster
-			? null
-			: <ConnectButton asLink connectUser={ true } from="connection-settings" />;
-
 		let cardContent = '';
 
 		if ( this.props.isDevMode ) {
-			if ( 'site' === this.props.type ) {
-				cardContent = (
+			cardContent = (
+				<div className="jp-connection-settings__info">
+					{
+						this.props.siteIcon
+							? <img width="64" height="64" className="jp-connection-settings__site-icon" src={ this.props.siteIcon } />
+							: <Gridicon icon="globe" size={ 64 } />
+					}
+					<div className="jp-connection-settings__text">
+						{
+							__( 'Your site is in Development Mode, so it can not be connected to WordPress.com.' )
+						}
+					</div>
+				</div>
+			);
+		} else if ( true === this.props.siteConnectionStatus ) {
+			cardContent = (
+				<div>
 					<div className="jp-connection-settings__info">
 						{
 							this.props.siteIcon
@@ -53,60 +69,59 @@ const ConnectionSettings = React.createClass( {
 						}
 						<div className="jp-connection-settings__text">
 							{
-								__( 'Your site is in Development Mode, so it can not be connected to WordPress.com.' )
+								__( 'Your site is connected to WordPress.com.' )
 							}
-						</div>
-					</div>
-				);
-			} else {
-				// return nothing if this is an account connection card
-				cardContent = (
-					<div className="jp-connection-settings__info">
-						<img alt="gravatar" width="64" height="64" className="jp-connection-settings__gravatar" src={ this.props.userWpComAvatar } />
-						<div className="jp-connection-settings__text">
 							{
-								__( 'The site is in Development Mode, so you can not connect to WordPress.com.' )
+								this.props.userIsMaster && (
+									<span><br /><em>{ __( 'You are the Jetpack owner.' ) }</em></span>
+								)
 							}
 						</div>
 					</div>
-				);
-			}
-		} else {
-			if ( 'site' === this.props.type ) {
-				if ( true === this.props.siteConnectionStatus ) {
-					cardContent = (
-						<div>
-							<div className="jp-connection-settings__info">
-								{
-									this.props.siteIcon
-										? <img width="64" height="64" className="jp-connection-settings__site-icon" src={ this.props.siteIcon } />
-										: <Gridicon icon="globe" size={ 64 } />
-								}
-								<div className="jp-connection-settings__text">
-									{
-										__( 'Your site is connected to WordPress.com.' )
-									}
-									{
-										this.props.userIsMaster
-											? <span><br /><em>{ __( 'You are the Jetpack owner.' ) }</em></span>
-											: ''
-									}
-								</div>
+					{
+						this.props.userCanDisconnectSite && (
+							<div className="jp-connection-settings__actions">
+								{ maybeShowDisconnectBtn }
 							</div>
-							{
-								this.props.userCanDisconnectSite
-									? <div className="jp-connection-settings__actions">
-										{ maybeShowDisconnectBtn }
-									  </div>
-									: ''
-							}
-						</div>
-					);
-				}
-			} else {
-				cardContent = (
-					this.props.isLinked
-						? <div>
+						)
+					}
+				</div>
+			);
+		}
+
+		return cardContent;
+	},
+
+	/**
+	 * Render a card for user linking. If it's connected, show the currently linked user.
+	 * Show an alternative message if site is in Dev Mode.
+	 *
+	 * @returns {string}
+	 */
+	userConnection() {
+		const maybeShowLinkUnlinkBtn = this.props.userIsMaster
+			? null
+			: <ConnectButton asLink connectUser={ true } from="connection-settings" />;
+
+		let cardContent = '';
+
+		if ( this.props.isDevMode ) {
+			// return nothing if this is an account connection card
+			cardContent = (
+				<div className="jp-connection-settings__info">
+					<img alt="gravatar" width="64" height="64" className="jp-connection-settings__gravatar" src={ this.props.userWpComAvatar } />
+					<div className="jp-connection-settings__text">
+						{
+							__( 'The site is in Development Mode, so you can not connect to WordPress.com.' )
+						}
+					</div>
+				</div>
+			);
+		} else {
+			cardContent = (
+				this.props.isLinked
+					? (
+						<div>
 							<div className="jp-connection-settings__info">
 								<img alt="gravatar" width="64" height="64" className="jp-connection-settings__gravatar" src={ this.props.userWpComAvatar } />
 								<div className="jp-connection-settings__text">
@@ -117,8 +132,10 @@ const ConnectionSettings = React.createClass( {
 							<div className="jp-connection-settings__actions">
 								{ maybeShowLinkUnlinkBtn }
 							</div>
-						  </div>
-						: <div>
+						</div>
+					)
+					: (
+						<div>
 							<div className="jp-connection-settings__info">
 								{
 									__( 'Link your account to WordPress.com to get the most out of Jetpack.' )
@@ -127,24 +144,37 @@ const ConnectionSettings = React.createClass( {
 							<div className="jp-connection-settings__actions">
 								{ maybeShowLinkUnlinkBtn }
 							</div>
-						  </div>
-				);
-			}
+						</div>
+					)
+			);
 		}
 
+		return cardContent;
+	},
+
+	render() {
+
 		return(
-			<div className="jp-connection-type">
+			<div className="jp-connections">
 				<QueryUserConnectionData />
-				<SectionHeader label={ 'site' === this.props.type ? __( 'Site Connection' ) : __( 'Account Connection' ) } />
-				<Card>
-					{ cardContent }
-				</Card>
+				<div className="jp-connection-type">
+					<SectionHeader label={ __( 'Site Connection' ) } />
+					<Card>
+						{ this.siteConnection() }
+					</Card>
+				</div>
+				<div className="jp-connection-type">
+					<SectionHeader label={ __( 'Account Connection' ) } />
+					<Card>
+						{ this.userConnection() }
+					</Card>
+				</div>
 			</div>
 		)
 	}
 } );
 
-ConnectionSettings.propTypes = {
+DashConnections.propTypes = {
 	isDevMode: React.PropTypes.bool.isRequired,
 	userCanDisconnectSite: React.PropTypes.bool.isRequired,
 	userIsMaster: React.PropTypes.bool.isRequired,
@@ -170,4 +200,4 @@ export default connect(
 			siteIcon: getSiteIcon( state )
 		}
 	}
-)( ConnectionSettings );
+)( DashConnections );
