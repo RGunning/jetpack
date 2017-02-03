@@ -1,7 +1,6 @@
 /**
  * External dependencies
  */
-import analytics from 'lib/analytics';
 import React from 'react';
 import { connect } from 'react-redux';
 import { translate as __ } from 'i18n-calypso';
@@ -56,11 +55,11 @@ const PostByEmail = moduleSettingsForm(
 					hideButton>
 					<SettingsGroup hasChild disableInDevMode module={ postByEmail }>
 						<ModuleToggle slug="post-by-email"
-									  compact
-									  disabled={ unavailableInDevMode }
-									  activated={ isPbeActive }
-									  toggling={ this.props.isSavingAnyOption( 'post-by-email' ) }
-									  toggleModule={ this.props.toggleModuleNow }>
+								compact
+								disabled={ unavailableInDevMode }
+								activated={ isPbeActive }
+								toggling={ this.props.isSavingAnyOption( 'post-by-email' ) }
+								toggleModule={ this.props.toggleModuleNow }>
 						<span className="jp-form-toggle-explanation">
 							{
 								this.props.module( 'post-by-email' ).description

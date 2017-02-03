@@ -1,7 +1,6 @@
 /**
  * External dependencies
  */
-import analytics from 'lib/analytics';
 import React from 'react';
 import { connect } from 'react-redux';
 import { translate as __ } from 'i18n-calypso';
@@ -71,7 +70,7 @@ const CustomContentTypes = moduleSettingsForm(
 						<FormToggle compact
 									checked={ this.state.testimonial }
 									disabled={ this.props.isSavingAnyOption() }
-									onChange={ e => this.updateCPTs( 'testimonial' ) }>
+									onChange={ () => this.updateCPTs( 'testimonial' ) }>
 							<span className="jp-form-toggle-explanation">
 								{
 									__( 'Enable Testimonial custom content type' )
@@ -81,7 +80,7 @@ const CustomContentTypes = moduleSettingsForm(
 						<FormFieldset>
 							<p className="jp-form-setting-explanation">
 								{
-									__( "The Testimonial custom content type allows you to add, organize, and display your testimonials. If your theme doesn’t support it yet, you can display testimonials using the testimonial shortcode	( [testimonials] ) or you can view a full archive of your testimonials." )
+									__( 'The Testimonial custom content type allows you to add, organize, and display your testimonials. If your theme doesn’t support it yet, you can display testimonials using the testimonial shortcode	( [testimonials] ) or you can view a full archive of your testimonials.' )
 								}
 							</p>
 							<p>
@@ -93,7 +92,7 @@ const CustomContentTypes = moduleSettingsForm(
 						<FormToggle compact
 									checked={ this.state.portfolio }
 									disabled={ this.props.isSavingAnyOption() }
-									onChange={ e => this.updateCPTs( 'portfolio' ) }>
+									onChange={ () => this.updateCPTs( 'portfolio' ) }>
 							<span className="jp-form-toggle-explanation">
 								{
 									__( 'Enable Portfolio custom content type' )
@@ -103,7 +102,7 @@ const CustomContentTypes = moduleSettingsForm(
 						<FormFieldset>
 							<p className="jp-form-setting-explanation">
 								{
-									__( "The Portfolio custom content type allows you to add, organize, and display your portfolios. If your theme doesn’t support it yet, you can display portfolios using the portfolio shortcode ( [portfolios] ) or you can view a full archive of your portfolios." )
+									__( 'The Portfolio custom content type allows you to add, organize, and display your portfolios. If your theme doesn’t support it yet, you can display portfolios using the portfolio shortcode ( [portfolios] ) or you can view a full archive of your portfolios.' )
 								}
 							</p>
 							<p>

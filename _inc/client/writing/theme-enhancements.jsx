@@ -23,7 +23,13 @@ const ThemeEnhancements = moduleSettingsForm(
 		/**
 		 * Get options for initial state.
 		 *
-		 * @returns {{infinite_scroll: *, infinite_scroll_google_analytics: *, wp_mobile_excerpt: *, wp_mobile_featured_images: *, wp_mobile_app_promos: *}}
+		 * @returns {Object} {{
+		 * infinite_scroll: *,
+		*		infinite_scroll_google_analytics: *,
+		*		wp_mobile_excerpt: *,
+		*		wp_mobile_featured_images: *,
+		*		wp_mobile_app_promos: *
+		 * }}
 		 */
 		getInitialState() {
 			return {
@@ -38,8 +44,8 @@ const ThemeEnhancements = moduleSettingsForm(
 		/**
 		 * Update state so toggles are updated.
 		 *
-		 * @param {string} optionName
-		 * @param {string} module
+		 * @param {string} optionName option slug
+		 * @param {string} module module slug
 		 */
 		updateOptions( optionName, module ) {
 			this.setState(
@@ -63,82 +69,80 @@ const ThemeEnhancements = moduleSettingsForm(
 					{ ...this.props }
 					hideButton
 					header={ __( 'Theme enhancements' ) }>
-					{
-						[
-							{
-								...this.props.module( 'infinite-scroll' ),
-								checkboxes: [
-									{
-										key: 'infinite_scroll',
-										label: __( 'Scroll infinitely (Shows 7 posts on each load)' )
-									},
-									{
-										key: 'infinite_scroll_google_analytics',
-										label: __( 'Track each infinite Scroll post load as a page view in Google Analytics' )
-									}
-								]
-							},
-							{
-								...this.props.module( 'minileven' ),
-								checkboxes: [
-									{
-										key: 'wp_mobile_excerpt',
-										label: __( 'Use excerpts instead of full posts on front page and archive pages' )
-									},
-									{
-										key: 'wp_mobile_featured_images',
-										label: __( 'Show featured images' )
-									},
-									{
-										key: 'wp_mobile_app_promos',
-										label: __( 'Show an ad for the WordPress mobile apps in the footer of the mobile theme' )
-									}
-								]
-							}
-						].map( item => {
-							let isItemActive = this.props.getOptionValue( item.module );
+					{ [
+						{
+							...this.props.module( 'infinite-scroll' ),
+							checkboxes: [
+								{
+									key: 'infinite_scroll',
+									label: __( 'Scroll infinitely (Shows 7 posts on each load)' )
+								},
+								{
+									key: 'infinite_scroll_google_analytics',
+									label: __( 'Track each infinite Scroll post load as a page view in Google Analytics' )
+								}
+							]
+						},
+						{
+							...this.props.module( 'minileven' ),
+							checkboxes: [
+								{
+									key: 'wp_mobile_excerpt',
+									label: __( 'Use excerpts instead of full posts on front page and archive pages' )
+								},
+								{
+									key: 'wp_mobile_featured_images',
+									label: __( 'Show featured images' )
+								},
+								{
+									key: 'wp_mobile_app_promos',
+									label: __( 'Show an ad for the WordPress mobile apps in the footer of the mobile theme' )
+								}
+							]
+						}
+					].map( item => {
+						let isItemActive = this.props.getOptionValue( item.module );
 
-							if ( ! this.props.isModuleFound( item.module ) ) {
-								return <span />;
-							}
+						if ( ! this.props.isModuleFound( item.module ) ) {
+							return <span />;
+						}
 
-							return (
-								<SettingsGroup hasChild key={ `theme_enhancement_${ item.module }` }  support={ item.learn_more_button }>
-									<ModuleToggle slug={ item.module }
-												  compact
-												  activated={ isItemActive }
-												  toggling={ this.props.isSavingAnyOption( item.module ) }
-												  toggleModule={ this.props.toggleModuleNow }>
-									<span className="jp-form-toggle-explanation">
+						return (
+							<SettingsGroup hasChild key={ `theme_enhancement_${ item.module }` } support={ item.learn_more_button }>
+								<ModuleToggle slug={ item.module }
+										compact
+										activated={ isItemActive }
+										toggling={ this.props.isSavingAnyOption( item.module ) }
+										toggleModule={ this.props.toggleModuleNow }>
+								<span className="jp-form-toggle-explanation">
+								{
+									item.description
+								}
+								</span>
+								</ModuleToggle>
+								<FormFieldset>
 									{
-										item.description
+										item.checkboxes.map( chkbx => {
+											return (
+												<FormToggle
+													compact
+													checked={ this.state[ chkbx.key ] }
+													disabled={ ! isItemActive }
+													onChange={ () => this.updateOptions( chkbx.key, item.module ) }
+													key={ `${ item.module }_${ chkbx.key }`}>
+													<span className="jp-form-toggle-explanation">
+														{
+															chkbx.label
+														}
+													</span>
+												</FormToggle>
+											);
+										} )
 									}
-									</span>
-									</ModuleToggle>
-									<FormFieldset>
-										{
-											item.checkboxes.map( chkbx => {
-												return (
-													<FormToggle
-														compact
-														checked={ this.state[ chkbx.key ] }
-														disabled={ ! isItemActive }
-														onChange={ e => this.updateOptions( chkbx.key, item.module ) }
-														key={ `${ item.module }_${ chkbx.key }`}>
-														<span className="jp-form-toggle-explanation">
-															{
-																chkbx.label
-															}
-														</span>
-													</FormToggle>
-												);
-											} )
-										}
-									</FormFieldset>
-								</SettingsGroup>
-							);
-						} )
-					}
+								</FormFieldset>
+							</SettingsGroup>
+						);
+					} ) }
 				</SettingsCard>
 			);
 		}
