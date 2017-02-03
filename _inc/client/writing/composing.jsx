@@ -1,7 +1,6 @@
 /**
  * External dependencies
  */
-import analytics from 'lib/analytics';
 import React from 'react';
 import { connect } from 'react-redux';
 import { translate as __ } from 'i18n-calypso';
@@ -14,11 +13,11 @@ import {
 	FormFieldset,
 	FormLegend
 } from 'components/forms';
+import { isModuleFound as _isModuleFound } from 'state/search';
 import { ModuleToggle } from 'components/module-toggle';
 import { ModuleSettingsForm as moduleSettingsForm } from 'components/module-settings/module-settings-form';
 import TagsInput from 'components/tags-input';
 import SettingsCard from 'components/settings-card';
-import SettingsGroup from 'components/settings-group';
 import InlineExpand from 'components/inline-expand';
 
 const Composing = moduleSettingsForm(
@@ -27,7 +26,21 @@ const Composing = moduleSettingsForm(
 		/**
 		 * Get options for initial state.
 		 *
-		 * @returns {{onpublish: *, onupdate: *, guess_lang: *, Bias Language: *, Cliches: *, Complex Expression: *, Diacritical Marks: *, Double Negative: *, Hidden Verbs: *, Jargon Language: *, Passive voice: *, Phrases to Avoid: *, Redundant Expression: *}}
+		 * @return {Object} initialState {{
+		 *		onpublish: *,
+		*		onupdate: *,
+		*		guess_lang: *,
+		*		Bias Language: *,
+		*		Cliches: *,
+		*		Complex Expression: *,
+		*		Diacritical Marks: *,
+		*		Double Negative: *,
+		*		Hidden Verbs: *,
+		*		Jargon Language: *,
+		*		Passive voice: *,
+		*		Phrases to Avoid: *,
+		*		Redundant Expression: *
+		 * }}
 		 */
 		getInitialState() {
 			return {
@@ -35,7 +48,7 @@ const Composing = moduleSettingsForm(
 				onupdate: this.props.getOptionValue( 'onupdate', 'after-the-deadline' ),
 				guess_lang: this.props.getOptionValue( 'guess_lang', 'after-the-deadline' ),
 				'Bias Language': this.props.getOptionValue( 'Bias Language', 'after-the-deadline' ),
-				'Cliches': this.props.getOptionValue( 'Cliches', 'after-the-deadline' ),
+				Cliches: this.props.getOptionValue( 'Cliches', 'after-the-deadline' ),
 				'Complex Expression': this.props.getOptionValue( 'Complex Expression', 'after-the-deadline' ),
 				'Diacritical Marks': this.props.getOptionValue( 'Diacritical Marks', 'after-the-deadline' ),
 				'Double Negative': this.props.getOptionValue( 'Double Negative', 'after-the-deadline' ),
@@ -50,7 +63,7 @@ const Composing = moduleSettingsForm(
 		/**
 		 * Update state so toggles are updated.
 		 *
-		 * @param {string} optionName
+		 * @param {string} optionName slug of an option to be updated
 		 */
 		updateOptions( optionName ) {
 			this.setState(
@@ -64,9 +77,9 @@ const Composing = moduleSettingsForm(
 		/**
 		 * Render a toggle for a single option.
 		 *
-		 * @param {string} setting
-		 * @param {string} label
-		 * @returns {object}
+		 * @param {string} setting the slug for the option
+		 * @param {string} label   text label to be displayed with the toggle
+		 * @returns {object} React element object
 		 */
 		getToggle( setting, label ) {
 			return(
@@ -74,7 +87,7 @@ const Composing = moduleSettingsForm(
 					compact
 					checked={ this.state[ setting ] }
 					disabled={ ! this.props.getOptionValue( 'after-the-deadline' ) || this.props.isUnavailableInDevMode( 'after-the-deadline' ) || this.props.isSavingAnyOption( setting ) }
-					onChange={ e => this.updateOptions( setting ) }>
+					onChange={ () => this.updateOptions( setting ) }>
 					<span className="jp-form-toggle-explanation">
 						{ label }
 					</span>
@@ -156,10 +169,10 @@ const Composing = moduleSettingsForm(
 			let markdownSettings = (
 				<FormFieldset support={ markdown.learn_more_button }>
 					<ModuleToggle slug="markdown"
-								  compact
-								  activated={ this.props.getOptionValue( 'markdown' ) }
-								  toggling={ this.props.isSavingAnyOption( 'markdown' ) }
-								  toggleModule={ this.props.toggleModuleNow }>
+							compact
+							activated={ this.props.getOptionValue( 'markdown' ) }
+							toggling={ this.props.isSavingAnyOption( 'markdown' ) }
+							toggleModule={ this.props.toggleModuleNow }>
 						<span className="jp-form-toggle-explanation">
 							{ markdown.description }
 						</span>
@@ -170,10 +183,10 @@ const Composing = moduleSettingsForm(
 			let atdSettings = (
 				<FormFieldset support={ atd.learn_more_button }>
 					<ModuleToggle slug="after-the-deadline"
-								  compact
-								  activated={ this.props.getOptionValue( 'after-the-deadline' ) }
-								  toggling={ this.props.isSavingAnyOption( 'after-the-deadline' ) }
-								  toggleModule={ this.props.toggleModuleNow }>
+							compact
+							activated={ this.props.getOptionValue( 'after-the-deadline' ) }
+							toggling={ this.props.isSavingAnyOption( 'after-the-deadline' ) }
+							toggleModule={ this.props.toggleModuleNow }>
 						<span className="jp-form-toggle-explanation">
 							{ atd.description }
 						</span>
