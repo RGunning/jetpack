@@ -143,7 +143,9 @@ export const Composing = moduleSettingsForm(
 		render() {
 			let markdown = this.props.getModule( 'markdown' ),
 				atd = this.props.getModule( 'after-the-deadline' ),
-				atdUnavailableInDevMode = this.props.isUnavailableInDevMode( 'after-the-deadline' );
+				atdUnavailableInDevMode = this.props.isUnavailableInDevMode( 'after-the-deadline' ),
+				markdownSaving = this.props.isSavingAnyOption( 'markdown' ),
+				atdSaving = this.props.isSavingAnyOption( 'after-the-deadline' );
 
 			return (
 				<SettingsCard header={ __( 'Composing', { context: 'Settings header' } ) } { ...this.props }>
@@ -152,8 +154,9 @@ export const Composing = moduleSettingsForm(
 							<ModuleToggle
 								slug="markdown"
 								compact
+								disabled={ markdownSaving }
 								activated={ this.props.getOptionValue( 'markdown' ) }
-								toggling={ this.props.isSavingAnyOption( 'markdown' ) }
+								toggling={ markdownSaving }
 								toggleModule={ this.props.toggleModuleNow }>
 								<span className="jp-form-toggle-explanation">
 									{ markdown.description }
@@ -165,9 +168,9 @@ export const Composing = moduleSettingsForm(
 						<ModuleToggle
 							slug="after-the-deadline"
 							compact
-							disabled={ atdUnavailableInDevMode }
+							disabled={ atdUnavailableInDevMode || atdSaving }
 							activated={ this.props.getOptionValue( 'after-the-deadline' ) }
-							toggling={ this.props.isSavingAnyOption( 'after-the-deadline' ) }
+							toggling={ atdSaving }
 							toggleModule={ this.props.toggleModuleNow }>
 							<span className="jp-form-toggle-explanation">
 								{ atd.description }
