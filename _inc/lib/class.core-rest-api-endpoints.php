@@ -286,6 +286,8 @@ class Jetpack_Core_Json_Api_Endpoints {
 	 *
 	 * @since 4.3.0
 	 *
+	 * @param WP_REST_Request $request The request sent to the WP REST API.
+	 *
 	 * @return array|wp-error
 	 */
 	public static function dismiss_notice( $request ) {
@@ -509,6 +511,9 @@ class Jetpack_Core_Json_Api_Endpoints {
 	 *
 	 * @uses Jetpack::disconnect();
 	 * @since 4.3.0
+	 *
+	 * @param WP_REST_Request $request The request sent to the WP REST API.
+	 *
 	 * @return bool|WP_Error True if Jetpack successfully disconnected.
 	 */
 	public static function disconnect_site( $request ) {
@@ -530,6 +535,9 @@ class Jetpack_Core_Json_Api_Endpoints {
 	 *
 	 * @uses Jetpack::disconnect();
 	 * @since 4.3.0
+	 *
+	 * @param WP_REST_Request $request The request sent to the WP REST API.
+	 *
 	 * @return string|WP_Error A raw URL if the connection URL could be built; error message otherwise.
 	 */
 	public static function build_connect_url() {
@@ -547,6 +555,8 @@ class Jetpack_Core_Json_Api_Endpoints {
 	 * Information about the current user.
 	 *
 	 * @since 4.3.0
+	 *
+	 * @param WP_REST_Request $request The request sent to the WP REST API.
 	 *
 	 * @return object
 	 */
@@ -579,7 +589,7 @@ class Jetpack_Core_Json_Api_Endpoints {
 	 *
 	 * @since 4.3.0
 	 *
-	 * @param WP_REST_Request $request
+	 * @param WP_REST_Request $request The request sent to the WP REST API.
 	 *
 	 * @return object Jetpack miscellaneous settings.
 	 */
@@ -621,6 +631,8 @@ class Jetpack_Core_Json_Api_Endpoints {
 	 *
 	 * @since 4.3.0
 	 * @uses  Jetpack::unlink_user
+	 *
+	 * @param WP_REST_Request $request The request sent to the WP REST API.
 	 *
 	 * @return bool|WP_Error True if user successfully unlinked.
 	 */
@@ -826,9 +838,7 @@ class Jetpack_Core_Json_Api_Endpoints {
 	 *
 	 * @since 4.3.0
 	 *
-	 * @param WP_REST_Request $request {
-	 *     Array of parameters received by request.
-	 * }
+	 * @param WP_REST_Request $request The request sent to the WP REST API.
 	 *
 	 * @return bool|WP_Error True if toggling Jumpstart succeeded. Otherwise, a WP_Error instance with the corresponding error.
 	 */
@@ -846,9 +856,7 @@ class Jetpack_Core_Json_Api_Endpoints {
 	 *
 	 * @since 4.3.0
 	 *
-	 * @param WP_REST_Request $request {
-	 *     Array of parameters received by request.
-	 * }
+	 * @param WP_REST_Request $request The request sent to the WP REST API.
 	 *
 	 * @return bool|WP_Error True if Jumpstart succeeded. Otherwise, a WP_Error instance with the corresponding error.
 	 */
@@ -930,9 +938,7 @@ class Jetpack_Core_Json_Api_Endpoints {
 	 *
 	 * @since 4.3.0
 	 *
-	 * @param WP_REST_Request $request {
-	 *     Array of parameters received by request.
-	 * }
+	 * @param WP_REST_Request $request The request sent to the WP REST API.
 	 *
 	 * @return bool|WP_Error True if Jumpstart was disabled or was nothing to dismiss. Otherwise, a WP_Error instance with a message.
 	 */
@@ -1643,7 +1649,7 @@ class Jetpack_Core_Json_Api_Endpoints {
 	 * @since 4.3.0
 	 *
 	 * @param string|bool $value Value to check.
-	 * @param WP_REST_Request $request
+	 * @param WP_REST_Request $request The request sent to the WP REST API.
 	 * @param string $param Name of the parameter passed to endpoint holding $value.
 	 *
 	 * @return bool
@@ -1661,7 +1667,7 @@ class Jetpack_Core_Json_Api_Endpoints {
 	 * @since 4.3.0
 	 *
 	 * @param int $value Value to check.
-	 * @param WP_REST_Request $request
+	 * @param WP_REST_Request $request The request sent to the WP REST API.
 	 * @param string $param Name of the parameter passed to endpoint holding $value.
 	 *
 	 * @return bool
@@ -1679,7 +1685,7 @@ class Jetpack_Core_Json_Api_Endpoints {
 	 * @since 4.3.0
 	 *
 	 * @param string $value Value to check.
-	 * @param WP_REST_Request $request
+	 * @param WP_REST_Request $request The request sent to the WP REST API.
 	 * @param string $param Name of the parameter passed to endpoint holding $value.
 	 *
 	 * @return bool
@@ -1710,7 +1716,7 @@ class Jetpack_Core_Json_Api_Endpoints {
 	 * @since 4.3.0
 	 *
 	 * @param string $value Value to check.
-	 * @param WP_REST_Request $request
+	 * @param WP_REST_Request $request The request sent to the WP REST API.
 	 * @param string $param Name of the parameter passed to endpoint holding $value.
 	 *
 	 * @return bool
@@ -1735,7 +1741,7 @@ class Jetpack_Core_Json_Api_Endpoints {
 	 * @since 4.3.0
 	 *
 	 * @param string $value Value to check.
-	 * @param WP_REST_Request $request
+	 * @param WP_REST_Request $request The request sent to the WP REST API.
 	 * @param string $param Name of the parameter passed to endpoint holding $value.
 	 *
 	 * @return bool
@@ -1753,7 +1759,7 @@ class Jetpack_Core_Json_Api_Endpoints {
 	 * @since 4.3.0
 	 *
 	 * @param string|bool $value Value to check.
-	 * @param WP_REST_Request $request
+	 * @param WP_REST_Request $request The request sent to the WP REST API.
 	 * @param string $param Name of the parameter passed to endpoint holding $value.
 	 *
 	 * @return bool
@@ -1774,7 +1780,7 @@ class Jetpack_Core_Json_Api_Endpoints {
 	 * @since 4.3.0
 	 *
 	 * @param string|bool $value Value to check.
-	 * @param WP_REST_Request $request
+	 * @param WP_REST_Request $request The request sent to the WP REST API.
 	 * @param string $param Name of the parameter passed to endpoint holding $value.
 	 *
 	 * @return bool
@@ -1804,7 +1810,7 @@ class Jetpack_Core_Json_Api_Endpoints {
 	 *     @type array $visible List of slug of services to share to that are displayed directly in the page.
 	 *     @type array $hidden  List of slug of services to share to that are concealed in a folding menu.
 	 * }
-	 * @param WP_REST_Request $request
+	 * @param WP_REST_Request $request The request sent to the WP REST API.
 	 * @param string $param Name of the parameter passed to endpoint holding $value.
 	 *
 	 * @return bool
@@ -1844,7 +1850,7 @@ class Jetpack_Core_Json_Api_Endpoints {
 	 * @since 4.3.0
 	 *
 	 * @param string|bool $value Value to check.
-	 * @param WP_REST_Request $request
+	 * @param WP_REST_Request $request The request sent to the WP REST API.
 	 * @param string $param Name of the parameter passed to endpoint holding $value.
 	 *
 	 * @return bool
@@ -1877,7 +1883,7 @@ class Jetpack_Core_Json_Api_Endpoints {
 	 * @since 4.3.0
 	 *
 	 * @param string $value Value to check.
-	 * @param WP_REST_Request $request
+	 * @param WP_REST_Request $request The request sent to the WP REST API.
 	 * @param string $param Name of the parameter passed to endpoint holding $value.
 	 *
 	 * @return bool
@@ -1924,7 +1930,7 @@ class Jetpack_Core_Json_Api_Endpoints {
 	 * @since 4.3.0
 	 *
 	 * @param string $value Value to check.
-	 * @param WP_REST_Request $request
+	 * @param WP_REST_Request $request The request sent to the WP REST API.
 	 * @param string $param Name of the parameter passed to endpoint holding $value.
 	 *
 	 * @return bool
