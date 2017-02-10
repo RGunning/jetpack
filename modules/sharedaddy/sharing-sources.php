@@ -710,7 +710,7 @@ class Share_Twitter extends Sharing_Source {
 			$sig = '';
 		}
 
-		$suffix_length = $this->short_url_length + $strlen( $sig );
+		$suffix_length = 23 + $strlen( $sig );
 		// $sig is handled by twitter in their 'via' argument.
 		// $post_link is handled by twitter in their 'url' argument.
 		if ( 140 < $strlen( $post_title ) + $suffix_length ) {
